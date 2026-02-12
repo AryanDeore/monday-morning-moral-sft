@@ -40,11 +40,12 @@ class InstructionDataset(Dataset):
             if i % 10000 == 0:
                 print(f"  Tokenized {i:,} / {len(ds):,}")
 
-            # Concatenate instruction + response + endoftext token
-            full_text = example["instruction"] + example["response"] + "<|endoftext|>"
+            # Concatenate instruction + response (NO endoftext token)
+            # EOT will be added in the collate function
+            full_text = example["instruction"] + example["response"]
 
-            # Tokenize (allow <|endoftext|> as special token)
-            token_ids = self.tokenizer.encode(full_text, allowed_special={"<|endoftext|>"})
+            # Tokenize
+            token_ids = self.tokenizer.encode(full_text)
 
             # Truncate to max_length
             if len(token_ids) > max_length:
