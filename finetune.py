@@ -18,7 +18,7 @@ from models.gpt2 import GPT2
 from utils.config import get_config
 
 
-def load_pretrained_model(checkpoint_path: str, device: str = "cpu") -> GPT2:
+def load_pretrained_model(checkpoint_path: str, device: str = "cpu", model_size: str = "30m") -> GPT2:
     """Load pretrained model from checkpoint.
 
     Args:
@@ -31,7 +31,7 @@ def load_pretrained_model(checkpoint_path: str, device: str = "cpu") -> GPT2:
     print(f"Loading pretrained model from {checkpoint_path}...")
 
     # Initialize model with config
-    config = get_config("30m")
+    config = get_config(model_size)
     # Filter config to only include parameters GPT2.__init__ accepts
     model_config = {
         k: v for k, v in config.items()
@@ -239,7 +239,7 @@ def main(
     print("-" * 70)
 
     # Load model
-    model = load_pretrained_model(pretrained_checkpoint, device=device)
+    model = load_pretrained_model(pretrained_checkpoint, device=device, model_size=model_size)
 
     # Create dataloaders
     print("\nCreating dataloaders...")
