@@ -60,7 +60,7 @@ if __name__ == "__main__":
     print("Creating validation dataloader (batch_size=8)...")
     val_dl = create_dataloader(split="validation", batch_size=8, shuffle=False)
 
-    print(f"\nDataLoader sizes:")
+    print("\nDataLoader sizes:")
     print(f"  Train batches: {len(train_dl):,}")
     print(f"  Val batches: {len(val_dl):,}")
 
@@ -73,18 +73,18 @@ if __name__ == "__main__":
     print(f"  Train batches (100 examples): {len(train_dl_small)}")
 
     # Get first batch
-    print(f"\nFirst batch structure:")
+    print("\nFirst batch structure:")
     for batch in train_dl_small:
         print(f"  input_ids shape: {batch['input_ids'].shape}")
         print(f"    (batch_size=8, seq_len={batch['input_ids'].shape[1]})")
         print(f"  attention_mask shape: {batch['attention_mask'].shape}")
         print(f"  labels shape: {batch['labels'].shape}")
 
-        print(f"\nFirst example in batch:")
+        print("\nFirst example in batch:")
         print(f"  input_ids: {batch['input_ids'][0][:20].tolist()}... (first 20 tokens)")
         print(f"  attention_mask: {batch['attention_mask'][0].tolist()}")
         print(f"  labels: {batch['labels'][0][:20].tolist()}... (first 20 tokens)")
         break
 
-    print(f"\n✓ Test complete")
+    print("\n✓ Test complete")
 

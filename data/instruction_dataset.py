@@ -87,7 +87,7 @@ if __name__ == "__main__":
     print(f"\nDataset size: {len(dataset):,} examples")
 
     # Print first 5 examples with tokenization
-    print(f"\nShowing first 5 examples:\n")
+    print("\nShowing first 5 examples:\n")
 
     # Load raw dataset to show original text
     raw_ds = load_dataset("0rn0/tinystories-instruct-balanced", split="train")
@@ -127,4 +127,4 @@ if __name__ == "__main__":
     print(f"Min length: {min(lengths)} tokens")
     print(f"Max length: {max(lengths)} tokens")
 
-    print(f"\n✓ Test complete")
+    print("\n✓ Test complete")

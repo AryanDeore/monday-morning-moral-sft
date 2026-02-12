@@ -115,7 +115,7 @@ def create_balanced_dataset():
         if count % 100_000 == 0:
             print(f"  Parsed {count:,} examples | happy: {len(happy_examples):,} | sad: {len(sad_examples):,}")
 
-    print(f"\nTrain parsing complete:")
+    print("\nTrain parsing complete:")
     print(f"  Total: {count:,}")
     print(f"  Happy: {len(happy_examples):,}")
     print(f"  Sad: {len(sad_examples):,}")
@@ -124,7 +124,7 @@ def create_balanced_dataset():
     num_sad = len(sad_examples)
     happy_sampled = random.sample(happy_examples, num_sad)
 
-    print(f"\nBalanced training set:")
+    print("\nBalanced training set:")
     print(f"  Sad: {num_sad:,}")
     print(f"  Happy (sampled): {len(happy_sampled):,}")
     print(f"  Total: {num_sad + len(happy_sampled):,}")
@@ -177,7 +177,7 @@ def create_balanced_dataset():
     # Step 6: Push to hub
     ds = DatasetDict({"train": train_ds, "validation": val_ds})
 
-    print(f"\nPushing to hub...")
+    print("\nPushing to hub...")
     print(f"  Train: {len(train_ds):,}")
     print(f"  Validation: {len(val_ds):,}")
 
@@ -255,12 +255,12 @@ def analyze_features(split: str = "train", num_examples: int = 100):
             if count >= num_examples:
                 break
 
-    print(f"\n\n=== FEATURE TAG FREQUENCY ===")
+    print("\n\n=== FEATURE TAG FREQUENCY ===")
     for tag, freq in feature_tags.most_common():
         pct = (freq / count) * 100
         print(f"  {tag}: {freq} ({pct:.1f}%)")
 
-    print(f"\n=== ENDING DISTRIBUTION ===")
+    print("\n=== ENDING DISTRIBUTION ===")
     for ending, freq in ending_distribution.most_common():
         pct = (freq / count) * 100
         print(f"  {ending}: {freq} ({pct:.1f}%)")
