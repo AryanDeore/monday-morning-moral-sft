@@ -1,13 +1,17 @@
 """Gradio web UI for story generation using fine-tuned GPT-2."""
 
+import os
+
 import gradio as gr
 import torch
+from huggingface_hub import hf_hub_download
 
 from checkpoint import load_model
 from generate import generate_story
 
-# Default checkpoint path (30M SFT model)
-CHECKPOINT_PATH = "checkpoints/sft_30M_model/finetune_epoch_5.pt"
+# HF Hub repo and filename for the SFT model
+HF_REPO_ID = os.environ.get("HF_REPO_ID", "0rn0/gpt2-30m-tinystories-sft")
+HF_FILENAME = os.environ.get("HF_FILENAME", "finetune_epoch_5.pt")
 
 # Auto-detect device
 if torch.cuda.is_available():
@@ -17,9 +21,11 @@ elif torch.backends.mps.is_available():
 else:
     DEVICE = "cpu"
 
-# Load model once at startup
-print(f"Loading model from {CHECKPOINT_PATH} on {DEVICE}...")
-model = load_model(CHECKPOINT_PATH, DEVICE)
+# Download checkpoint from HF Hub and load model once at startup
+print(f"Downloading {HF_FILENAME} from {HF_REPO_ID}...")
+checkpoint_path = hf_hub_download(repo_id=HF_REPO_ID, filename=HF_FILENAME)
+print(f"Loading model on {DEVICE}...")
+model = load_model(checkpoint_path, DEVICE)
 print("Model loaded! Ready to generate stories.\n")
 
 
@@ -89,4 +95,8 @@ with gr.Blocks(title="Tiny Tales GPT") as demo:
     topic.submit(fn=generate, inputs=[topic, ending, temperature], outputs=output)
 
 if __name__ == "__main__":
-    demo.launch(css=CUSTOM_CSS)
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", 7860)),
+        css=CUSTOM_CSS,
+    )
