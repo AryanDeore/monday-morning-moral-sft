@@ -41,10 +41,15 @@ def generate(topic, ending, temperature):
     return story
 
 
-with gr.Blocks(title="Monday Morning Moral") as demo:
+CUSTOM_CSS = ".gen-btn { font-size: 1.1rem !important; } .gradio-container { display: flex; flex-direction: column; justify-content: center; min-height: 100vh; } [data-testid='markdown'] { text-align: center !important; }"
+
+with gr.Blocks(title="Tiny Tales GPT") as demo:
+    gr.Markdown("<br><br>")
+    gr.Markdown("<h1 style='font-size: 2.5rem; margin: 0;'>Tiny Tales GPT</h1>")
     gr.Markdown(
-        "# Monday Morning Moral\nGenerate short stories with happy or sad endings using a fine-tuned GPT-2 model."
+        "<p style='font-size: 1.1rem;'>Generate short stories using a pre-trained and instruction fine-tuned GPT-2 model.</p>"
     )
+    gr.Markdown("<br><br>")
 
     with gr.Row():
         with gr.Column():
@@ -67,13 +72,21 @@ with gr.Blocks(title="Monday Morning Moral") as demo:
                     label="Temperature (creativity)",
                     info="Low = predictable, High = creative",
                 )
-            submit_btn = gr.Button("Generate Story", variant="primary")
+            with gr.Row():
+                gr.Column(scale=3)
+                with gr.Column(scale=1, min_width=120):
+                    submit_btn = gr.Button(
+                        "Generate Story",
+                        variant="primary",
+                        size="sm",
+                        elem_classes=["gen-btn"],
+                    )
 
         with gr.Column():
-            output = gr.Textbox(label="Generated Story", lines=12)
+            output = gr.Textbox(label="Generated Story", lines=10)
 
     submit_btn.click(fn=generate, inputs=[topic, ending, temperature], outputs=output)
     topic.submit(fn=generate, inputs=[topic, ending, temperature], outputs=output)
 
 if __name__ == "__main__":
-    demo.launch(theme=gr.themes.Soft())
+    demo.launch(css=CUSTOM_CSS)
