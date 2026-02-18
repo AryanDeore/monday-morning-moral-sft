@@ -337,7 +337,7 @@ with gr.Blocks(title="Tiny Tales GPT") as demo:
         # Email
         "<a href='mailto:aryandeore.work@gmail.com'>"
         "<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.9.732-1.636 1.636-1.636h.749L12 10.638 21.615 3.82h.749c.904 0 1.636.737 1.636 1.636z'/></svg>"
-        "Get in touch"
+        "aryandeore.work@gmail.com"
         "</a>"
         "</div>"
     )
