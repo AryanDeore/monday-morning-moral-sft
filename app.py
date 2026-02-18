@@ -202,16 +202,22 @@ CUSTOM_CSS = """
 }
 
 /* Footer */
-/* Footer pinned to bottom */
-/* Footer */
 .footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
     text-align: center;
-    padding: 180px 0 16px;
+    padding: 16px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: auto;
+    border-top: 1px solid #f0e6d3;
+    background: white;
+    z-index: 100;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 .footer a {
@@ -225,21 +231,43 @@ CUSTOM_CSS = """
     text-decoration: none;
 }
 
-.footer a:hover {
-    color: #d15f00;
-}
-
 .footer svg {
     width: 18px;
     height: 18px;
     fill: #888;
+    transition: fill 0.2s ease;
 }
 
-/* Make the gradio container full height so footer is pushed down */
+/* LinkedIn link */
+.footer a:nth-child(1):hover {
+    color: #0A66C2;
+}
+
+.footer a:nth-child(1):hover svg {
+    fill: #0A66C2;
+}
+
+/* Website link */
+.footer a:nth-child(2):hover {
+    color: #D4864A;
+}
+
+.footer a:nth-child(2):hover svg {
+    fill: #D4864A;
+}
+
+/* Gmail link */
+.footer a:nth-child(3):hover {
+    color: #EA4335;
+}
+
+.footer a:nth-child(3):hover svg {
+    fill: #EA4335;
+}
+
+/* Add padding to gradio container so content doesn't hide behind fixed footer */
 .gradio-container {
-    min-height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
+    padding-bottom: 100px !important;
 }
 """
 
