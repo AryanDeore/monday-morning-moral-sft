@@ -54,3 +54,5 @@ notes/
 # Docker
 *.dockerfile
 docker-compose*.yml
+
+.DS_Store
