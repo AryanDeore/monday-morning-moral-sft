@@ -274,11 +274,15 @@ CUSTOM_CSS = """
 """
 
 with gr.Blocks(title="Tiny Tales GPT") as demo:
-    gr.HTML("<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>")
+    gr.HTML(
+        "<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>"
+    )
 
     gr.Markdown("<br>")
     gr.HTML("<h1 class='app-title'>Tiny Tales GPT</h1>")
-    gr.HTML("<p class='app-subtitle'>Generate short stories using a pre-trained and instruction fine-tuned GPT-2 model.</p>")
+    gr.HTML(
+        "<p class='app-subtitle'>Generate short stories using a pre-trained and instruction fine-tuned GPT-2 model.</p>"
+    )
     gr.HTML(
         "<div style='text-align: center; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px;'>"
         "<a href='https://github.com/AryanDeore/Tiny-Tales-GPT'><img src='https://img.shields.io/badge/GitHub-Pre%20Training-181717?logo=github&style=flat-square' style='height: clamp(20px, 3vw, 23px); border-radius: 6px;' /></a>"
@@ -349,7 +353,7 @@ with gr.Blocks(title="Tiny Tales GPT") as demo:
 
 if __name__ == "__main__":
     demo.launch(
-        server_name="0.0.0.0",
+        server_name="127.0.0.1",
         server_port=int(os.environ.get("PORT", 7860)),
         css=CUSTOM_CSS,
     )
