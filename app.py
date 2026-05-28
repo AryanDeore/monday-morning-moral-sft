@@ -1,9 +1,12 @@
 """Gradio web UI for story generation using fine-tuned GPT-2."""
 
 import os
+import time
 
 import gradio as gr
 import torch
+from fastapi import FastAPI
+from pydantic import BaseModel
 
 from generate import generate_story
 from models.gpt2 import GPT2
@@ -351,9 +354,44 @@ with gr.Blocks(title="Tiny Tales GPT") as demo:
     submit_btn.click(fn=generate, inputs=[topic, ending, temperature], outputs=output)
     topic.submit(fn=generate, inputs=[topic, ending, temperature], outputs=output)
 
+
+class GenerateRequest(BaseModel):
+    topic: str
+    ending: str = "Happy"
+    temperature: float = 0.7
+
+
+api = FastAPI(title="Tiny Tales GPT API")
+
+
+@api.get("/healthz")
+def healthz():
+    return {"ok": True, "service": "tiny-tales-gpt"}
+
+
+@api.post("/api/generate")
+def generate_api(payload: GenerateRequest):
+    start = time.perf_counter()
+    story = generate(payload.topic, payload.ending, payload.temperature)
+    latency_ms = round((time.perf_counter() - start) * 1000, 2)
+    return {
+        "ok": True,
+        "story": story,
+        "latency_ms": latency_ms,
+        "model": HF_REPO_ID,
+        "device": DEVICE,
+    }
+
+
+app = gr.mount_gradio_app(api, demo, path="/")
+
+
 if __name__ == "__main__":
-    demo.launch(
-        server_name="127.0.0.1",
-        server_port=int(os.environ.get("PORT", 7860)),
-        css=CUSTOM_CSS,
+    import uvicorn
+
+    uvicorn.run(
+        "app:app",
+        host="127.0.0.1",
+        port=int(os.environ.get("PORT", 7860)),
+        reload=False,
     )
